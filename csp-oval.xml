@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oval_definitions
+  xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5"
+  xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5"
+  xmlns:windows="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows"
+  xmlns:ind="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://oval.mitre.org/XMLSchema/oval-definitions-5 oval-definitions-schema.xsd
+    http://oval.mitre.org/XMLSchema/oval-definitions-5#windows windows-definitions-schema.xsd
+    http://oval.mitre.org/XMLSchema/oval-definitions-5#independent independent-definitions-schema.xsd">
+
+  <definitions>
+    <definition id="oval:org.csp:def:1" version="1" class="inventory">
+      <metadata>
+        <title>CSP Header Present in HTTP Response</title>
+        <description>Checks if CSP header is present in response from localhost</description>
+      </metadata>
+      <criteria>
+        <criterion test_ref="oval:org.csp:tst:1" comment="CSP header exists"/>
+      </criteria>
+    </definition>
+  </definitions>
+
+  <tests>
+    <ind:textfilecontent54_test id="oval:org.csp:tst:1" check="at least one" version="1" comment="Check CSP header in curl response">
+      <object object_ref="oval:org.csp:obj:1"/>
+      <state state_ref="oval:org.csp:ste:1"/>
+    </ind:textfilecontent54_test>
+  </tests>
+
+  <objects>
+    <ind:textfilecontent54_object id="oval:org.csp:obj:1" version="1">
+      <filepath>C:\Windows\Temp\csp_test.txt</filepath>
+      <pattern operation="pattern match">.*</pattern>
+      <instance datatype="int">1</instance>
+    </ind:textfilecontent54_object>
+  </objects>
+
+  <states>
+    <ind:textfilecontent54_state id="oval:org.csp:ste:1" version="1">
+      <subexpression operation="pattern match">Content-Security-Policy:</subexpression>
+    </ind:textfilecontent54_state>
+  </states>
+</oval_definitions>
